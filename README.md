@@ -3,24 +3,28 @@
 This repository contains Helm charts with Dynatrace configuration for
 the [crossplane-observability-demo](https://github.com/vfarcic/crossplane-observability-demo).
 
-Installation instructions: https://katharinasick.github.io/crossplane-observability-demo-dashboards/.
+## Usage
 
-Currently this repository contains two Helm Charts:
+[Helm](https://helm.sh) must be installed to use the charts. Please refer to
+Helm's [documentation](https://helm.sh/docs) to get started.
 
-## kubernetes-cluster
+Once Helm has been set up correctly, add the repo as follows:
 
-Contains dashboards relevant in the context of a Kubernetes cluster:
+```shell
+helm repo add crossplane-observability-demo-dynatrace https://katharinasick.github.io/crossplane-observability-demo-dynatrace
+```
 
-### Crossplane Metrics
+If you had already added this repo earlier, run `helm repo update` to retrieve the latest versions of the packages. You
+can then run `helm search repo crossplane-observability-demo-dynatrace` to see all available charts.
 
-A dashboard that visualizes some of the metrics Crossplane and its providers expose to ensure all resources are
-deployed & reconciled correctly.
+To install e.g. the `kubernetes-workload` chart:
 
-![](./img/crossplaneMetrics.png)
+```shell
+helm install dynatrace-kubernetes-workload crossplane-observability-demo-dynatrace/kubernetes-workload
+```
 
-## kubernetes-workload
+To uninstall the chart:
 
-Contains a management zone, dashboard, alerting profiles & Slack notification configuration for a workload running in a
-Kubernetes cluster.
-
-![](./img/app.png)
+```shell
+helm delete dynatrace-kubernetes-workload
+```
