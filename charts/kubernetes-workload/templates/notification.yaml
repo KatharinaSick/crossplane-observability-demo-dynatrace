@@ -1,0 +1,17 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: {{ .Release.Name }}.notification
+  namespace: {{ .Release.Namespace }}
+spec:
+  forProvider:
+    source: Inline
+    module: |
+      resource "dynatrace_slack_notification" "app" {
+        active  = true
+        name    = "{{ .Values.workloadName }} ({{ .Values.cluster }}/{{ .Values.namespace }})"
+        profile = dynatrace_alerting.app.id
+        url     = var.slack_webhook
+        channel = "{{ .Values.slackChannel }}"
+        message = ":{State}: *{State} {ProblemTitle}*\n{ProblemURL}
+      }

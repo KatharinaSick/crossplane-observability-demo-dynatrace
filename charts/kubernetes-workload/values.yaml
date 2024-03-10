@@ -1,0 +1,36 @@
+# -- The secret that contains the OAuth client id & secret used to get at token for creating the dashboard. Expected secret keys: clientId & clientSecret
+oauthCredentialsSecretName: dynatrace-oauth-credentials
+
+# -- The name of the Kubernetes workload to monitor
+workloadName: ""
+# -- The Kubernetes cluster the app is deployed to
+cluster: ""
+# -- The Kubernetes namespace the app is deployed to
+namespace: ""
+# -- The name of the database of your application (if it has one)
+databaseName: ""
+
+# -- Dynatrace dashboard configuration
+dashboard:
+  # -- Whether to create a dashboard for the application or not
+  enabled: true
+
+# -- Dynatrace alerting configuration
+alerting:
+  # -- Whether to receive notifications about problems or not.
+  enabled: true
+  # -- The name of the Slack channel to send the notification to. The Slack webhook needs to be configured via the secret passed to the provider.
+  slackChannel: ""
+
+# -- The Helm chart uses the Crossplane Terraform provider to configure some resources.
+crossplaneTerraformProvider:
+  # -- Whether to install the provider as part of the Helm chart or not
+  install: true
+  # -- A reference to the secret that contains the Dynatrace connection details. See https://registry.terraform.io/providers/dynatrace-oss/dynatrace/latest/docs#configure-the-dynatrace-provider
+  connectionSecretRef:
+    # -- The name of the secret
+    name: dynatrace-creds
+    # -- The namespace the secret is applied in
+    namespace: crossplane-system
+    # -- The key that contains the credentials. Expected JSON keys inside this one: dt_env_url, dt_api_token
+    key: credentials
