@@ -1,0 +1,29 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: {{ .Release.Name }}.terraform-config
+  namespace: {{ .Release.Namespace }}
+spec:
+  providerConfigRef:
+    name: crossplane-observability-demo-dynatrace-{{ .Release.Name }}
+  forProvider:
+    source: Remote
+    module: git::https://github.com/KatharinaSick/crossplane-observability-demo-dynatrace.git//charts/kubernetes-workload/terraform-config?ref=main
+    vars:
+      - key: cluster
+        value: {{ .Values.cluster }}
+      - key: namespace
+        value: {{ .Values.namespace }}
+      - key: workload_name
+        value: {{ .Values.workloadName }}
+      - key: database_name
+        value: {{ .Values.databaseName }}
+      - key: slack_channel
+        value: "{{ .Values.alerting.slackChannel }}"
+    varFiles:
+      - format: JSON
+        source: SecretKey
+        secretKeyRef:
+          key: {{ .Values.crossplaneTerraformProvider.connectionSecretRef.key }}
+          name: {{ .Values.crossplaneTerraformProvider.connectionSecretRef.name }}
+          namespace: {{ .Values.crossplaneTerraformProvider.connectionSecretRef.namespace }}

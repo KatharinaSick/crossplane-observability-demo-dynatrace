@@ -1,12 +1,3 @@
-{{- if .Values.crossplaneTerraformProvider.install }}
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-terraform
-spec:
-  package: xpkg.upbound.io/upbound/provider-terraform:v0.14.1
----
-{{- end }}
 apiVersion: tf.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
@@ -15,9 +6,9 @@ spec:
   credentials:
     - filename: terraform.tfvars.json
       secretRef:
-        key: credentials
-        name: dynatrace-creds
-        namespace: crossplane-system
+        key: {{ .Values.crossplaneTerraformProvider.connectionSecretRef.key }}
+        name: {{ .Values.crossplaneTerraformProvider.connectionSecretRef.name }}
+        namespace: {{ .Values.crossplaneTerraformProvider.connectionSecretRef.namespace }}
       source: Secret
   configuration: |
     provider "dynatrace" {
@@ -33,10 +24,6 @@ spec:
       type = string
     }
 
-    variable "slack_webhook" {
-      type = string
-    }
-
     terraform {
       required_providers {
         dynatrace = {
@@ -48,7 +35,7 @@ spec:
       // Modules _must_ use remote state. The provider does not persist state.
       backend "kubernetes" {
         secret_suffix     = "providerconfig-crossplane-observability-demo-dynatrace-{{ .Release.Name }}"
-        namespace         = "upbound-system"
+        namespace         = "crossplane-system"
         in_cluster_config = true
       }
     }

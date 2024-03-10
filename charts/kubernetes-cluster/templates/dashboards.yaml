@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-dashboards
   namespace: {{ .Release.Namespace }}
 data:
-  {{- if .Values.dashboard.enabled }}
+  {{- if .Values.dashboards.crossplaneMetrics.enabled }}
   crossplaneMetrics.json: |
     {
       "version": 13,

@@ -22,10 +22,8 @@ alerting:
   # -- The name of the Slack channel to send the notification to. The Slack webhook needs to be configured via the secret passed to the provider.
   slackChannel: ""
 
-# -- The Helm chart uses the Crossplane Terraform provider to configure some resources.
+# -- The Helm chart uses the Crossplane Terraform provider to configure some resources. The Helm chart will create a provider config but the provider must already be installed.
 crossplaneTerraformProvider:
-  # -- Whether to install the provider as part of the Helm chart or not
-  install: true
   # -- A reference to the secret that contains the Dynatrace connection details. See https://registry.terraform.io/providers/dynatrace-oss/dynatrace/latest/docs#configure-the-dynatrace-provider
   connectionSecretRef:
     # -- The name of the secret
