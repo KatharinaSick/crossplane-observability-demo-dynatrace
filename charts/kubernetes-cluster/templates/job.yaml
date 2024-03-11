@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-create-dashboard
+  name: {{ .Release.Name }}-create-dashboards
   namespace: {{ .Release.Namespace }}
 spec:
   parallelism: 1
   completions: 1
   template:
     metadata:
-      name: create-dashboard
+      name: create-dashboards
     spec:
       volumes:
         - name: scripts
@@ -41,5 +41,5 @@ spec:
           command:
             - /bin/sh
             - -c
-            - /scripts/create-dashboard.sh
+            - /scripts/create-dashboards.sh
       restartPolicy: Never

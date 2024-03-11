@@ -1168,3 +1168,946 @@ data:
       }
     }
   {{- end }}
+  {{- if .Values.dashboards.clusterOverview.enabled }}
+  clusterOverview.json: |
+    {
+      "version": 13,
+      "variables": [],
+      "tiles": {
+        "2": {
+          "type": "data",
+          "title": "Ready Nodes",
+          "query": "timeseries nodes=count(dt.kubernetes.nodes), nonempty: true,\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\" and node_condition_ready == true\n| fieldsAdd last=arrayLast(nodes)",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "singleValue",
+          "visualizationSettings": {
+            "thresholds": [
+              {
+                "id": 1,
+                "field": "last",
+                "title": "",
+                "isEnabled": true,
+                "rules": [
+                  {
+                    "id": 0,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                    },
+                    "comparator": "≥",
+                    "label": "",
+                    "value": 1
+                  },
+                  {
+                    "id": 1,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 2,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  }
+                ]
+              }
+            ],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {
+                "categoryAxisLabel": "dt.davis.disable_merging_reason",
+                "valueAxisLabel": "dt.davis.timeout"
+              },
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "nodes"
+                ],
+                "leftAxisDimensions": [
+                  "last"
+                ],
+                "fields": [],
+                "values": []
+              }
+            },
+            "singleValue": {
+              "showLabel": false,
+              "label": "",
+              "prefixIcon": "CheckCircleIcon",
+              "recordField": "last",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "3": {
+          "type": "data",
+          "title": "Nodes with disk pressure",
+          "query": "timeseries nodes=count(dt.kubernetes.nodes, default: 0), nonempty: true,\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\" and node_condition_disk_pressure == true\n| fieldsAdd last=arrayLast(nodes)",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "singleValue",
+          "visualizationSettings": {
+            "thresholds": [
+              {
+                "id": 1,
+                "field": "last",
+                "title": "",
+                "isEnabled": true,
+                "rules": [
+                  {
+                    "id": 0,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 1,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 2,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                    },
+                    "comparator": "≥",
+                    "label": "",
+                    "value": 1
+                  }
+                ]
+              }
+            ],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {
+                "categoryAxisLabel": "dt.davis.disable_merging_reason",
+                "valueAxisLabel": "dt.davis.timeout"
+              },
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "nodes"
+                ],
+                "leftAxisDimensions": [
+                  "last"
+                ],
+                "fields": [],
+                "values": []
+              }
+            },
+            "singleValue": {
+              "showLabel": false,
+              "label": "",
+              "prefixIcon": "ErrorIcon",
+              "recordField": "last",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "4": {
+          "type": "data",
+          "title": "Nodes with memory pressure",
+          "query": "timeseries nodes=count(dt.kubernetes.nodes, default: 0), nonempty: true,\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\" and node_condition_memory_pressure == true\n| fieldsAdd last=arrayLast(nodes)",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "singleValue",
+          "visualizationSettings": {
+            "thresholds": [
+              {
+                "id": 1,
+                "field": "last",
+                "title": "",
+                "isEnabled": true,
+                "rules": [
+                  {
+                    "id": 0,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 1,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 2,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                    },
+                    "comparator": "≥",
+                    "label": "",
+                    "value": 1
+                  }
+                ]
+              }
+            ],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {
+                "categoryAxisLabel": "dt.davis.disable_merging_reason",
+                "valueAxisLabel": "dt.davis.timeout"
+              },
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "nodes"
+                ],
+                "leftAxisDimensions": [
+                  "last"
+                ],
+                "fields": [],
+                "values": []
+              }
+            },
+            "singleValue": {
+              "showLabel": false,
+              "label": "",
+              "prefixIcon": "ErrorIcon",
+              "recordField": "last",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "5": {
+          "type": "data",
+          "title": "Nodes with PID pressure",
+          "query": "timeseries nodes=count(dt.kubernetes.nodes, default: 0), nonempty: true,\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\" and node_condition_pid_pressure == true\n| fieldsAdd last=arrayLast(nodes)",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "singleValue",
+          "visualizationSettings": {
+            "thresholds": [
+              {
+                "id": 1,
+                "field": "last",
+                "title": "",
+                "isEnabled": true,
+                "rules": [
+                  {
+                    "id": 0,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 1,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 2,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                    },
+                    "comparator": "≥",
+                    "label": "",
+                    "value": 1
+                  }
+                ]
+              }
+            ],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {
+                "categoryAxisLabel": "dt.davis.disable_merging_reason",
+                "valueAxisLabel": "dt.davis.timeout"
+              },
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "nodes"
+                ],
+                "leftAxisDimensions": [
+                  "last"
+                ],
+                "fields": [],
+                "values": []
+              }
+            },
+            "singleValue": {
+              "showLabel": false,
+              "label": "",
+              "prefixIcon": "ErrorIcon",
+              "recordField": "last",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "6": {
+          "type": "data",
+          "title": "Memory",
+          "query": "timeseries { \n  usage = sum(dt.kubernetes.container.cpu_usage), \n  request = sum(dt.kubernetes.container.requests_cpu), \n  limit = sum(dt.kubernetes.container.limits_cpu)\n},\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\"",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "lineChart",
+          "visualizationSettings": {
+            "thresholds": [],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "usage",
+                  "request",
+                  "limit"
+                ],
+                "leftAxisDimensions": [],
+                "fields": [],
+                "values": []
+              }
+            },
+            "singleValue": {
+              "showLabel": true,
+              "label": "",
+              "prefixIcon": "",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            },
+            "unitsOverrides": [
+              {
+                "identifier": "usage",
+                "unitCategory": "unspecified",
+                "baseUnit": "millicore",
+                "displayUnit": null,
+                "decimals": 0,
+                "suffix": "",
+                "delimiter": true,
+                "added": 1710101916783
+              },
+              {
+                "identifier": "request",
+                "unitCategory": "unspecified",
+                "baseUnit": "millicore",
+                "displayUnit": null,
+                "decimals": 0,
+                "suffix": "",
+                "delimiter": true,
+                "added": 1710101936085
+              },
+              {
+                "identifier": "limit",
+                "unitCategory": "unspecified",
+                "baseUnit": "millicore",
+                "displayUnit": null,
+                "decimals": 0,
+                "suffix": "",
+                "delimiter": true,
+                "added": 1710101945291
+              }
+            ]
+          }
+        },
+        "7": {
+          "type": "data",
+          "title": "CPU",
+          "query": "timeseries { \n  usage = sum(dt.kubernetes.container.memory_working_set), \n  request = sum(dt.kubernetes.container.requests_memory), \n  limit = sum(dt.kubernetes.container.limits_memory)\n},\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\"",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "lineChart",
+          "visualizationSettings": {
+            "thresholds": [],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "usage",
+                  "request",
+                  "limit"
+                ],
+                "leftAxisDimensions": [],
+                "fields": [],
+                "values": []
+              },
+              "categoricalBarChartSettings": {}
+            },
+            "singleValue": {
+              "showLabel": true,
+              "label": "",
+              "prefixIcon": "",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            },
+            "unitsOverrides": []
+          }
+        },
+        "8": {
+          "type": "data",
+          "title": "Open",
+          "query": "fetch events\n| filter dt.system.bucket==\"default_security_events\"\n| filter event.provider==\"Dynatrace\"\n| filter event.type==\"VULNERABILITY_STATE_REPORT_EVENT\"\n| filter event.level==\"ENTITY\"\n| filter in(related_entities.kubernetes_clusters.names, \"{{ .Values.cluster }}\")\n// filter for the latest snapshot per entity\n| sort timestamp, direction:\"descending\"\n| summarize {\nevent.status=takeFirst(event.status),\nvulnerability.resolution.status=takeFirst(vulnerability.resolution.status),\nvulnerability.mute.status=takeFirst(vulnerability.mute.status),\nvulnerability.risk.level=takeFirst(vulnerability.risk.level),\nvulnerability.stack=takeFirst(vulnerability.stack),\nvulnerability.type=takeFirst(vulnerability.type),\nvulnerability.davis_assessment.exploit_status=takeFirst(vulnerability.davis_assessment.exploit_status),\nvulnerability.external_id=takeFirst(vulnerability.external_id),\nvulnerability.references.cve=takeFirst(vulnerability.references.cve),\nvulnerability.technology=takeFirst(vulnerability.technology),\naffected_entity.vulnerable_component.name=takeFirst(affected_entity.vulnerable_component.name),\naffected_entity.management_zones.names=takeFirst(affected_entity.management_zones.names),\naffected_entity.name=takeFirst(affected_entity.name),\nrelated_entities.hosts.names=takeFirst(related_entities.hosts.names),\nrelated_entities.kubernetes_workloads.names=takeFirst(related_entities.kubernetes_workloads.names),\nrelated_entities.kubernetes_clusters.names=takeFirst(related_entities.kubernetes_clusters.names),\ntimestamp=takeFirst(timestamp)\n}, by: {vulnerability.display_id, affected_entity.id}\n// end of filter for the latest snapshot\n| summarize\n`Status`=takeFirst(vulnerability.resolution.status),\n`Muted`=takeFirst(vulnerability.mute.status==\"MUTED\"),\nby: {vulnerability.display_id,alias:`Problem id`}\n| summarize\n`Muted`=countIf(Muted==TRUE),\n`Resolved`=countIf(Status!=\"OPEN\" AND Muted==FALSE),\n`Open`=countIf(Status==\"OPEN\" AND Muted==FALSE)\n| fields Open",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "singleValue",
+          "visualizationSettings": {
+            "thresholds": [
+              {
+                "id": 1,
+                "field": "Open",
+                "title": "",
+                "isEnabled": true,
+                "rules": [
+                  {
+                    "id": 0,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                    },
+                    "comparator": "≥",
+                    "label": ""
+                  },
+                  {
+                    "id": 1,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                    },
+                    "comparator": "≥",
+                    "label": "",
+                    "value": 1
+                  },
+                  {
+                    "id": 2,
+                    "color": {
+                      "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                    },
+                    "comparator": "≥",
+                    "label": "",
+                    "value": "10"
+                  }
+                ]
+              }
+            ],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {}
+            },
+            "singleValue": {
+              "showLabel": false,
+              "label": "",
+              "prefixIcon": "ApplicationSecuritySignetIcon",
+              "recordField": "Open",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "9": {
+          "type": "data",
+          "title": "Resolved",
+          "query": "fetch events\n| filter dt.system.bucket==\"default_security_events\"\n| filter event.provider==\"Dynatrace\"\n| filter event.type==\"VULNERABILITY_STATE_REPORT_EVENT\"\n| filter event.level==\"ENTITY\"\n| filter in(related_entities.kubernetes_clusters.names, \"{{ .Values.cluster }}\")\n// filter for the latest snapshot per entity\n| sort timestamp, direction:\"descending\"\n| summarize {\nevent.status=takeFirst(event.status),\nvulnerability.resolution.status=takeFirst(vulnerability.resolution.status),\nvulnerability.mute.status=takeFirst(vulnerability.mute.status),\nvulnerability.risk.level=takeFirst(vulnerability.risk.level),\nvulnerability.stack=takeFirst(vulnerability.stack),\nvulnerability.type=takeFirst(vulnerability.type),\nvulnerability.davis_assessment.exploit_status=takeFirst(vulnerability.davis_assessment.exploit_status),\nvulnerability.external_id=takeFirst(vulnerability.external_id),\nvulnerability.references.cve=takeFirst(vulnerability.references.cve),\nvulnerability.technology=takeFirst(vulnerability.technology),\naffected_entity.vulnerable_component.name=takeFirst(affected_entity.vulnerable_component.name),\naffected_entity.management_zones.names=takeFirst(affected_entity.management_zones.names),\naffected_entity.name=takeFirst(affected_entity.name),\nrelated_entities.hosts.names=takeFirst(related_entities.hosts.names),\nrelated_entities.kubernetes_workloads.names=takeFirst(related_entities.kubernetes_workloads.names),\nrelated_entities.kubernetes_clusters.names=takeFirst(related_entities.kubernetes_clusters.names),\ntimestamp=takeFirst(timestamp)\n}, by: {vulnerability.display_id, affected_entity.id}\n// end of filter for the latest snapshot\n| summarize\n`Status`=takeFirst(vulnerability.resolution.status),\n`Muted`=takeFirst(vulnerability.mute.status==\"MUTED\"),\nby: {vulnerability.display_id,alias:`Problem id`}\n| summarize\n`Muted`=countIf(Muted==TRUE),\n`Resolved`=countIf(Status!=\"OPEN\" AND Muted==FALSE),\n`Open`=countIf(Status==\"OPEN\" AND Muted==FALSE)\n| fields Resolved",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "singleValue",
+          "visualizationSettings": {
+            "thresholds": [],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {}
+            },
+            "singleValue": {
+              "showLabel": false,
+              "label": "",
+              "prefixIcon": "SecurityResolvedIcon",
+              "recordField": "Resolved",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "10": {
+          "type": "data",
+          "title": "Muted",
+          "query": "fetch events\n| filter dt.system.bucket==\"default_security_events\"\n| filter event.provider==\"Dynatrace\"\n| filter event.type==\"VULNERABILITY_STATE_REPORT_EVENT\"\n| filter event.level==\"ENTITY\"\n| filter in(related_entities.kubernetes_clusters.names, \"{{ .Values.cluster }}\")\n// filter for the latest snapshot per entity\n| sort timestamp, direction:\"descending\"\n| summarize {\nevent.status=takeFirst(event.status),\nvulnerability.resolution.status=takeFirst(vulnerability.resolution.status),\nvulnerability.mute.status=takeFirst(vulnerability.mute.status),\nvulnerability.risk.level=takeFirst(vulnerability.risk.level),\nvulnerability.stack=takeFirst(vulnerability.stack),\nvulnerability.type=takeFirst(vulnerability.type),\nvulnerability.davis_assessment.exploit_status=takeFirst(vulnerability.davis_assessment.exploit_status),\nvulnerability.external_id=takeFirst(vulnerability.external_id),\nvulnerability.references.cve=takeFirst(vulnerability.references.cve),\nvulnerability.technology=takeFirst(vulnerability.technology),\naffected_entity.vulnerable_component.name=takeFirst(affected_entity.vulnerable_component.name),\naffected_entity.management_zones.names=takeFirst(affected_entity.management_zones.names),\naffected_entity.name=takeFirst(affected_entity.name),\nrelated_entities.hosts.names=takeFirst(related_entities.hosts.names),\nrelated_entities.kubernetes_workloads.names=takeFirst(related_entities.kubernetes_workloads.names),\nrelated_entities.kubernetes_clusters.names=takeFirst(related_entities.kubernetes_clusters.names),\ntimestamp=takeFirst(timestamp)\n}, by: {vulnerability.display_id, affected_entity.id}\n// end of filter for the latest snapshot\n| summarize\n`Status`=takeFirst(vulnerability.resolution.status),\n`Muted`=takeFirst(vulnerability.mute.status==\"MUTED\"),\nby: {vulnerability.display_id,alias:`Problem id`}\n| summarize\n`Muted`=countIf(Muted==TRUE),\n`Resolved`=countIf(Status!=\"OPEN\" AND Muted==FALSE),\n`Open`=countIf(Status==\"OPEN\" AND Muted==FALSE)\n| fields Muted",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "singleValue",
+          "visualizationSettings": {
+            "thresholds": [],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {}
+            },
+            "singleValue": {
+              "showLabel": false,
+              "label": "",
+              "prefixIcon": "NotificationOffIcon",
+              "recordField": "Muted",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "11": {
+          "type": "data",
+          "title": "Open Vulnerabilities",
+          "query": "fetch events\n| filter dt.system.bucket==\"default_security_events\"\n| filter event.provider==\"Dynatrace\"\n| filter event.type==\"VULNERABILITY_STATE_REPORT_EVENT\"\n| filter event.level==\"ENTITY\"\n| filter in(related_entities.kubernetes_clusters.names, \"{{ .Values.cluster }}\")\n// filter for the latest snapshot per entity\n| sort timestamp, direction:\"descending\"\n| summarize {\nevent.status=takeFirst(event.status),\nvulnerability.resolution.status=takeFirst(vulnerability.resolution.status),\nvulnerability.mute.status=takeFirst(vulnerability.mute.status),\nvulnerability.risk.level=takeFirst(vulnerability.risk.level),\nvulnerability.risk.score=takeFirst(vulnerability.risk.score),\nvulnerability.stack=takeFirst(vulnerability.stack),\nvulnerability.type=takeFirst(vulnerability.type),\nvulnerability.davis_assessment.exploit_status=takeFirst(vulnerability.davis_assessment.exploit_status),\nvulnerability.external_id=takeFirst(vulnerability.external_id),\nvulnerability.references.cve=takeFirst(vulnerability.references.cve),\nvulnerability.technology=takeFirst(vulnerability.technology),\naffected_entity.vulnerable_component.name=takeFirst(affected_entity.vulnerable_component.name),\naffected_entity.management_zones.names=takeFirst(affected_entity.management_zones.names),\naffected_entity.name=takeFirst(affected_entity.name),\nrelated_entities.hosts.names=takeFirst(related_entities.hosts.names),\nrelated_entities.kubernetes_workloads.names=takeFirst(related_entities.kubernetes_workloads.names),\nrelated_entities.kubernetes_clusters.names=takeFirst(related_entities.kubernetes_clusters.names),\ntimestamp=takeFirst(timestamp)\n}, by: {vulnerability.display_id, affected_entity.id}\n// end of filter for the latest snapshot\n| fields timestamp, riskLevel = vulnerability.risk.level, cve = vulnerability.references.cve, type = vulnerability.type, affectedEntity = affected_entity.name, score = vulnerability.risk.score",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "table",
+          "visualizationSettings": {
+            "thresholds": [],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "relative",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {
+                "categoryAxis": "riskLevel",
+                "valueAxis": "score",
+                "categoryAxisLabel": "riskLevel",
+                "valueAxisLabel": "score"
+              },
+              "fieldMapping": {
+                "timestamp": "timestamp",
+                "leftAxisValues": [
+                  "score"
+                ],
+                "leftAxisDimensions": [
+                  "riskLevel"
+                ]
+              }
+            },
+            "singleValue": {
+              "showLabel": true,
+              "label": "",
+              "prefixIcon": "",
+              "recordField": "timestamp",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "12": {
+          "type": "data",
+          "title": "Pod Status",
+          "query": "timeseries pods=count(dt.kubernetes.pods),\nby: { pod_phase }, \nnonempty: true,\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\"\n| fieldsAdd last=if(arraySize(pods) > 0, arrayLast(pods), else: 1)\n",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "categoricalBarChart",
+          "visualizationSettings": {
+            "thresholds": [],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "absolute",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {
+                "categoryAxis": "pod_phase",
+                "categoryAxisLabel": "pod_phase",
+                "valueAxis": "interval",
+                "valueAxisLabel": "interval",
+                "colorPaletteMode": "multi-color",
+                "scale": "absolute",
+                "layout": "vertical"
+              },
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "pods"
+                ],
+                "leftAxisDimensions": [
+                  "pod_phase",
+                  "last"
+                ],
+                "fields": [],
+                "values": []
+              }
+            },
+            "singleValue": {
+              "showLabel": true,
+              "label": "",
+              "prefixIcon": "",
+              "recordField": "k8s.namespace.name",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "13": {
+          "type": "data",
+          "title": "Pods by Namespace",
+          "query": "timeseries pods=count(dt.kubernetes.pods),\nby: { k8s.namespace.name }, \nnonempty: true,\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\"\n| fieldsAdd last=if(arraySize(pods) > 0, arrayLast(pods), else: 1)\n",
+          "davis": {
+            "enabled": false,
+            "davisVisualization": {
+              "isAvailable": true
+            }
+          },
+          "visualization": "categoricalBarChart",
+          "visualizationSettings": {
+            "thresholds": [],
+            "chartSettings": {
+              "gapPolicy": "connect",
+              "circleChartSettings": {
+                "groupingThresholdType": "absolute",
+                "groupingThresholdValue": 0,
+                "valueType": "relative"
+              },
+              "categoryOverrides": {},
+              "categoricalBarChartSettings": {
+                "categoryAxis": "k8s.namespace.name",
+                "categoryAxisLabel": "k8s.namespace.name",
+                "valueAxis": [
+                  "last"
+                ],
+                "valueAxisLabel": "last",
+                "colorPaletteMode": "multi-color",
+                "scale": "absolute",
+                "layout": "vertical"
+              },
+              "fieldMapping": {
+                "timestamp": "timeframe",
+                "leftAxisValues": [
+                  "pods"
+                ],
+                "leftAxisDimensions": [
+                  "k8s.namespace.name",
+                  "last"
+                ],
+                "fields": [],
+                "values": []
+              }
+            },
+            "singleValue": {
+              "showLabel": true,
+              "label": "",
+              "prefixIcon": "",
+              "recordField": "k8s.namespace.name",
+              "autoscale": true,
+              "alignment": "center",
+              "colorThresholdTarget": "value"
+            },
+            "table": {
+              "rowDensity": "condensed",
+              "enableSparklines": false,
+              "hiddenColumns": [],
+              "lineWrapIds": [],
+              "columnWidths": {}
+            }
+          }
+        },
+        "14": {
+          "type": "markdown",
+          "title": "",
+          "content": "# {{ .Values.cluster }} Overview"
+        },
+        "15": {
+          "type": "markdown",
+          "title": "",
+          "content": "### Is my cluster healthy?"
+        },
+        "16": {
+          "type": "markdown",
+          "title": "",
+          "content": "### Has my cluster vulnerabilities?"
+        }
+      },
+      "layouts": {
+        "2": {
+          "x": 0,
+          "y": 7,
+          "w": 3,
+          "h": 3
+        },
+        "3": {
+          "x": 3,
+          "y": 7,
+          "w": 3,
+          "h": 3
+        },
+        "4": {
+          "x": 9,
+          "y": 7,
+          "w": 3,
+          "h": 3
+        },
+        "5": {
+          "x": 6,
+          "y": 7,
+          "w": 3,
+          "h": 3
+        },
+        "6": {
+          "x": 6,
+          "y": 2,
+          "w": 6,
+          "h": 5
+        },
+        "7": {
+          "x": 0,
+          "y": 2,
+          "w": 6,
+          "h": 5
+        },
+        "8": {
+          "x": 13,
+          "y": 2,
+          "w": 4,
+          "h": 3
+        },
+        "9": {
+          "x": 17,
+          "y": 2,
+          "w": 4,
+          "h": 3
+        },
+        "10": {
+          "x": 21,
+          "y": 2,
+          "w": 3,
+          "h": 3
+        },
+        "11": {
+          "x": 13,
+          "y": 5,
+          "w": 11,
+          "h": 7
+        },
+        "12": {
+          "x": 0,
+          "y": 10,
+          "w": 12,
+          "h": 4
+        },
+        "13": {
+          "x": 0,
+          "y": 14,
+          "w": 12,
+          "h": 5
+        },
+        "14": {
+          "x": 0,
+          "y": 0,
+          "w": 24,
+          "h": 1
+        },
+        "15": {
+          "x": 0,
+          "y": 1,
+          "w": 12,
+          "h": 1
+        },
+        "16": {
+          "x": 13,
+          "y": 1,
+          "w": 11,
+          "h": 1
+        }
+      }
+    }
+  {{- end }}

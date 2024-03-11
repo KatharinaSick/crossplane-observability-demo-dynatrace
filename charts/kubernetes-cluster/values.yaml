@@ -10,3 +10,7 @@ dashboards:
   crossplaneMetrics:
     # -- Whether to create a Crossplane metrics dashboard or not
     enabled: true
+    # -- A simple Kubernetes dashboard that shows a cluster overview
+  clusterOverview:
+    # -- Whether to create a cluster overview dashboard or not
+    enabled: true
