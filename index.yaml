@@ -30,6 +30,16 @@ entries:
     version: 1.0.0
   kubernetes-workload:
   - apiVersion: v2
+    created: "2024-03-11T04:17:13.802042246Z"
+    description: Creates a management zone, dashboard, alerting profile and Slack
+      notification configuration for an application running in a Kubernetes cluster.
+    digest: 600fff8523ed9626a4e618cc6622aa55a2b77741853e33c5275198e7a521ec80
+    name: kubernetes-workload
+    type: application
+    urls:
+    - https://github.com/KatharinaSick/crossplane-observability-demo-dynatrace/releases/download/kubernetes-workload-1.0.4/kubernetes-workload-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
     created: "2024-03-10T21:54:17.035294126Z"
     description: Creates a management zone, dashboard, alerting profile and Slack
       notification configuration for an application running in a Kubernetes cluster.
@@ -69,4 +79,4 @@ entries:
     urls:
     - https://github.com/KatharinaSick/crossplane-observability-demo-dynatrace/releases/download/kubernetes-workload-1.0.0/kubernetes-workload-1.0.0.tgz
     version: 1.0.0
-generated: "2024-03-10T21:54:17.035313923Z"
+generated: "2024-03-11T04:17:13.802117065Z"
