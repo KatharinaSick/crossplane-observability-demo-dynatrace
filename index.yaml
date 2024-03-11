@@ -29,6 +29,15 @@ entries:
     - https://github.com/KatharinaSick/crossplane-observability-demo-dynatrace/releases/download/kubernetes-cluster-1.0.0/kubernetes-cluster-1.0.0.tgz
     version: 1.0.0
   - apiVersion: v2
+    created: "2024-03-11T06:45:06.972625529Z"
+    description: Creates dashboards for a Kubernetes cluster.
+    digest: 82440706bf6ce19fe838c5e2fb0b5daea3385f8a9ae7996c2c5095ad4d8d8418
+    name: kubernetes-cluster
+    type: application
+    urls:
+    - https://github.com/KatharinaSick/crossplane-observability-demo-dynatrace/releases/download/kubernetes-cluster-0.2.0/kubernetes-cluster-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     created: "2024-03-11T05:20:34.094662764Z"
     description: Creates dashboards for a Kubernetes cluster.
     digest: 035cc0520ad83f9d792ae4c6466e783bda9644e2f82cf80ee0812cf5db5a1520
@@ -158,4 +167,4 @@ entries:
     urls:
     - https://github.com/KatharinaSick/crossplane-observability-demo-dynatrace/releases/download/kubernetes-workload-0.1.0/kubernetes-workload-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-11T05:58:18.337514523Z"
+generated: "2024-03-11T06:45:06.972666092Z"
