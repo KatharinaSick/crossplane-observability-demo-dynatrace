@@ -1,7 +1,7 @@
 apiVersion: tf.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: crossplane-observability-demo-dynatrace-{{ .Release.Name }}
+  name: {{ .Release.Name }}
 spec:
   credentials:
     - filename: terraform.tfvars.json
@@ -34,7 +34,7 @@ spec:
 
       // Modules _must_ use remote state. The provider does not persist state.
       backend "kubernetes" {
-        secret_suffix     = "providerconfig-crossplane-observability-demo-dynatrace-{{ .Release.Name }}"
+        secret_suffix     = "{{ .Release.Name }}"
         namespace         = "crossplane-system"
         in_cluster_config = true
       }

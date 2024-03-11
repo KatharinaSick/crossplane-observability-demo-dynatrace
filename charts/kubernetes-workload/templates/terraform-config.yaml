@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   providerConfigRef:
-    name: crossplane-observability-demo-dynatrace-{{ .Release.Name }}
+    name: {{ .Release.Name }}
   forProvider:
     source: Remote
     module: git::https://github.com/KatharinaSick/crossplane-observability-demo-dynatrace.git//charts/kubernetes-workload/terraform-config?ref=main
