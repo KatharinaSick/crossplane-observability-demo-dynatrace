@@ -8,20 +8,7 @@ data:
   crossplaneMetrics.json: |
     {
       "version": 13,
-      "variables": [
-        {
-          "key": "Provider",
-          "type": "csv",
-          "input": "civo/civo, crossplane-contrib/helm, crossplane-contrib/kubernetes, upbound/aws, upbound/azure, upbound/gcp, crossplane/sql",
-          "multiple": true
-        },
-        {
-          "key": "Function",
-          "type": "csv",
-          "input": "crossplane-contrib/auto-ready, crossplane-contrib/go-templating, crossplane-contrib/patch-and-transform",
-          "multiple": true
-        }
-      ],
+      "variables": [],
       "tiles": {
         "1": {
           "type": "markdown",
@@ -108,7 +95,7 @@ data:
         "4": {
           "type": "data",
           "title": "CPU Usage by Provider",
-          "query": "timeseries usage=avg(dt.kubernetes.container.cpu_usage), filter: k8s.cluster.name == \"{{ .Values.cluster }}\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"provider\"), by:{k8s.workload.name}\n| fieldsAdd provider = \n  if(contains(k8s.workload.name, \"civo\"), \"civo/civo\", \n  else: if(contains(k8s.workload.name, \"helm\"), \"crossplane-contrib/helm\", \n  else: if(contains(k8s.workload.name, \"kubernetes\"), \"crossplane-contrib/kubernetes\", \n  else: if(contains(k8s.workload.name, \"sql\"), \"crossplane/sql\", \n  else: if(contains(k8s.workload.name, \"aws\"), \"upbound/aws\", \n  else: if(contains(k8s.workload.name, \"azure\"), \"upbound/azure\", \n  else: if(contains(k8s.workload.name, \"gcp\"), \"upbound/gcp\", \n  else: k8s.workload.name \n  )))))))\n| summarize usage=avg(usage[]), by:{provider, timeframe, interval}\n| filter in(provider, array($Provider))",
+          "query": "timeseries usage=avg(dt.kubernetes.container.cpu_usage), filter: k8s.cluster.name == \"crossplane-observability-demo\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"provider\"), by:{k8s.workload.name}\n| fieldsAdd provider = \n  if(contains(k8s.workload.name, \"civo\"), \"civo/civo\", \n  else: if(contains(k8s.workload.name, \"helm\"), \"crossplane-contrib/helm\", \n  else: if(contains(k8s.workload.name, \"kubernetes\"), \"crossplane-contrib/kubernetes\", \n  else: if(contains(k8s.workload.name, \"sql\"), \"crossplane/sql\", \n  else: if(contains(k8s.workload.name, \"aws\"), \"upbound/aws\", \n  else: if(contains(k8s.workload.name, \"azure\"), \"upbound/azure\", \n  else: if(contains(k8s.workload.name, \"gcp\"), \"upbound/gcp\", \n  else: if(contains(k8s.workload.name, \"terraform\"), \"upbound/terraform\", \n  else: k8s.workload.name \n  ))))))))\n| summarize usage=avg(usage[]), by:{provider, timeframe, interval}\n",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -177,7 +164,7 @@ data:
         "5": {
           "type": "data",
           "title": "CPU Usage by Function",
-          "query": "timeseries usage=avg(dt.kubernetes.container.cpu_usage), filter: k8s.cluster.name == \"{{ .Values.cluster }}\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"function\"), by:{k8s.workload.name}\n| fieldsAdd function = \n  if(contains(k8s.workload.name, \"auto-ready\"), \"crossplane-contrib/auto-ready\", \n  else: if(contains(k8s.workload.name, \"go-templating\"), \"crossplane-contrib/go-templating\", \n  else: if(contains(k8s.workload.name, \"patch-and-transform\"), \"crossplane-contrib/patch-and-transform\", \n  else: k8s.workload.name \n  )))\n| summarize usage=avg(usage[]), by:{function, timeframe, interval}\n| filter in(function, array($Function))",
+          "query": "timeseries usage=avg(dt.kubernetes.container.cpu_usage), filter: k8s.cluster.name == \"crossplane-observability-demo\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"function\"), by:{k8s.workload.name}\n| fieldsAdd function = \n  if(contains(k8s.workload.name, \"auto-ready\"), \"crossplane-contrib/auto-ready\", \n  else: if(contains(k8s.workload.name, \"go-templating\"), \"crossplane-contrib/go-templating\", \n  else: if(contains(k8s.workload.name, \"patch-and-transform\"), \"crossplane-contrib/patch-and-transform\", \n  else: k8s.workload.name \n  )))\n| summarize usage=avg(usage[]), by:{function, timeframe, interval}",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -307,7 +294,7 @@ data:
         "7": {
           "type": "data",
           "title": "Memory Usage by Provider",
-          "query": "timeseries usage=avg(dt.kubernetes.container.memory_working_set), filter: k8s.cluster.name == \"{{ .Values.cluster }}\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"provider\"), by:{k8s.workload.name}\n| fieldsAdd provider = \n  if(contains(k8s.workload.name, \"civo\"), \"civo/civo\", \n  else: if(contains(k8s.workload.name, \"helm\"), \"crossplane-contrib/helm\", \n  else: if(contains(k8s.workload.name, \"kubernetes\"), \"crossplane-contrib/kubernetes\", \n  else: if(contains(k8s.workload.name, \"sql\"), \"crossplane/sql\", \n  else: if(contains(k8s.workload.name, \"aws\"), \"upbound/aws\", \n  else: if(contains(k8s.workload.name, \"azure\"), \"upbound/azure\", \n  else: if(contains(k8s.workload.name, \"gcp\"), \"upbound/gcp\", \n  else: k8s.workload.name \n  )))))))\n| summarize usage=avg(usage[]), by:{provider, timeframe, interval}\n| filter in(provider, array($Provider))",
+          "query": "timeseries usage=avg(dt.kubernetes.container.memory_working_set), filter: k8s.cluster.name == \"crossplane-observability-demo\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"provider\"), by:{k8s.workload.name}\n| fieldsAdd provider = \n  if(contains(k8s.workload.name, \"civo\"), \"civo/civo\", \n  else: if(contains(k8s.workload.name, \"helm\"), \"crossplane-contrib/helm\", \n  else: if(contains(k8s.workload.name, \"kubernetes\"), \"crossplane-contrib/kubernetes\", \n  else: if(contains(k8s.workload.name, \"sql\"), \"crossplane/sql\", \n  else: if(contains(k8s.workload.name, \"aws\"), \"upbound/aws\", \n  else: if(contains(k8s.workload.name, \"azure\"), \"upbound/azure\", \n  else: if(contains(k8s.workload.name, \"gcp\"), \"upbound/gcp\", \n  else: if(contains(k8s.workload.name, \"terraform\"), \"upbound/terraform\", \n  else: k8s.workload.name \n  ))))))))\n| summarize usage=avg(usage[]), by:{provider, timeframe, interval}",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -365,7 +352,7 @@ data:
         "8": {
           "type": "data",
           "title": "Memory Usage by Function",
-          "query": "timeseries usage=avg(dt.kubernetes.container.memory_working_set), filter: k8s.cluster.name == \"{{ .Values.cluster }}\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"function\"), by:{k8s.workload.name}\n| fieldsAdd function = \n  if(contains(k8s.workload.name, \"auto-ready\"), \"crossplane-contrib/auto-ready\", \n  else: if(contains(k8s.workload.name, \"go-templating\"), \"crossplane-contrib/go-templating\", \n  else: if(contains(k8s.workload.name, \"patch-and-transform\"), \"crossplane-contrib/patch-and-transform\", \n  else: k8s.workload.name \n  )))\n| summarize usage=avg(usage[]), by:{function, timeframe, interval}\n| filter in(function, array($Function))",
+          "query": "timeseries usage=avg(dt.kubernetes.container.memory_working_set), filter: k8s.cluster.name == \"crossplane-observability-demo\" and k8s.namespace.name == \"crossplane-system\" and contains(k8s.workload.name, \"function\"), by:{k8s.workload.name}\n| fieldsAdd function = \n  if(contains(k8s.workload.name, \"auto-ready\"), \"crossplane-contrib/auto-ready\", \n  else: if(contains(k8s.workload.name, \"go-templating\"), \"crossplane-contrib/go-templating\", \n  else: if(contains(k8s.workload.name, \"patch-and-transform\"), \"crossplane-contrib/patch-and-transform\", \n  else: k8s.workload.name \n  )))\n| summarize usage=avg(usage[]), by:{function, timeframe, interval}",
           "davis": {
             "enabled": false,
             "davisVisualization": {

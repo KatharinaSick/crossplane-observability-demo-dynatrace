@@ -25,7 +25,7 @@ data:
     --silent \
     --header "Authorization: Bearer $token" \
     --header 'Content-Type: multipart/form-data' \
-    --form name="Crossplane ({{ .Values.cluster }})" \
+    --form name="Crossplane Metrics ({{ .Values.cluster }})" \
     --form type=dashboard \
     --form content=@dashboards/crossplaneMetrics.json \
     | jq -r .id)
@@ -38,7 +38,7 @@ data:
       --silent \
       --header "Authorization: Bearer $token" \
       --header 'Content-Type: multipart/form-data' \
-      --form name="{{ .Values.cluster }} Overview" \
+      --form name="Cluster Overview ({{ .Values.cluster }})" \
       --form type=dashboard \
       --form content=@dashboards/clusterOverview.json \
       | jq -r .id)
