@@ -1361,8 +1361,9 @@ data:
             }
           }
         }
-        {{- if .Values.databaseName }}
-      ,
+        {{- if .Values.databaseAddress }}
+        {{- $database := split "." .Values.databaseAddress }}
+        ,
         "18": {
           "type": "markdown",
           "title": "",
@@ -1371,7 +1372,7 @@ data:
         "19": {
           "type": "data",
           "title": "Database Connections",
-          "query": "timeseries sum(dt.cloud.aws.rds.connections),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))",
+          "query": "timeseries sum(dt.cloud.aws.rds.connections),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1427,7 +1428,7 @@ data:
         "20": {
           "type": "data",
           "title": "Database Free Storage",
-          "query": "timeseries max(dt.cloud.aws.rds.free),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))",
+          "query": "timeseries max(dt.cloud.aws.rds.free),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1483,7 +1484,7 @@ data:
         "21": {
           "type": "data",
           "title": "Database CPU Usage",
-          "query": "timeseries max(dt.cloud.aws.rds.cpu.usage),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))",
+          "query": "timeseries max(dt.cloud.aws.rds.cpu.usage),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1539,7 +1540,7 @@ data:
         "22": {
           "type": "data",
           "title": "Database Freeable Memory",
-          "query": "timeseries max(dt.cloud.aws.rds.memory.freeable),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))",
+          "query": "timeseries max(dt.cloud.aws.rds.memory.freeable),\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1595,7 +1596,7 @@ data:
         "23": {
           "type": "data",
           "title": "Database Latency",
-          "query": "timeseries {read = max(dt.cloud.aws.rds.latency.read), write = max(dt.cloud.aws.rds.latency.write)},\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))",
+          "query": "timeseries {read = max(dt.cloud.aws.rds.latency.read), write = max(dt.cloud.aws.rds.latency.write)},\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1653,7 +1654,7 @@ data:
         "24": {
           "type": "data",
           "title": "Database IOPS",
-          "query": "timeseries {read = max(dt.cloud.aws.rds.ops.read), write = max(dt.cloud.aws.rds.ops.write)},\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))",
+          "query": "timeseries {read = max(dt.cloud.aws.rds.ops.read), write = max(dt.cloud.aws.rds.ops.write)},\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1711,7 +1712,7 @@ data:
         "25": {
           "type": "data",
           "title": "Database Throughput",
-          "query": "timeseries {read = max(dt.cloud.aws.rds.throughput.read), write = max(dt.cloud.aws.rds.throughput.write)},\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))",
+          "query": "timeseries {read = max(dt.cloud.aws.rds.throughput.read), write = max(dt.cloud.aws.rds.throughput.write)},\nfilter: in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1769,7 +1770,7 @@ data:
         "26": {
           "type": "data",
           "title": "Database Events",
-          "query": "fetch events\n| filter in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ .Values.databaseName }}\\\")\"))\n| fields timestamp, event.category, event.description\n| sort timestamp asc",
+          "query": "fetch events\n| filter in(dt.source_entity, classicEntitySelector(\"type(relational_database_service),entityName(\\\"{{ $database._0 }}\\\")\"))\n| fields timestamp, event.category, event.description\n| sort timestamp asc",
           "davis": {
             "enabled": false,
             "davisVisualization": {
@@ -1955,7 +1956,7 @@ data:
           "w": 9,
           "h": 6
         }
-        {{- if .Values.databaseName }}
+        {{- if .Values.databaseAddress }}
       ,
         "18": {
           "x": 13,

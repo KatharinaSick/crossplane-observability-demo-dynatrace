@@ -7,8 +7,8 @@ workloadName: ""
 cluster: ""
 # -- The Kubernetes namespace the app is deployed to
 namespace: ""
-# -- The name of the database of your application (if it has one)
-databaseName: ""
+# -- The address of the database of your application (if it has one)
+databaseAddress: ""
 
 # -- Dynatrace dashboard configuration
 dashboard:
