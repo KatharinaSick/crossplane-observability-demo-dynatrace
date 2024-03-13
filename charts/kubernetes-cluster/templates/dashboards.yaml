@@ -1519,7 +1519,7 @@ data:
         },
         "6": {
           "type": "data",
-          "title": "Memory",
+          "title": "CPU",
           "query": "timeseries { \n  usage = sum(dt.kubernetes.container.cpu_usage), \n  request = sum(dt.kubernetes.container.requests_cpu), \n  limit = sum(dt.kubernetes.container.limits_cpu)\n},\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\"",
           "davis": {
             "enabled": false,
@@ -1601,7 +1601,7 @@ data:
         },
         "7": {
           "type": "data",
-          "title": "CPU",
+          "title": "Memory",
           "query": "timeseries { \n  usage = sum(dt.kubernetes.container.memory_working_set), \n  request = sum(dt.kubernetes.container.requests_memory), \n  limit = sum(dt.kubernetes.container.limits_memory)\n},\nfilter: k8s.cluster.name == \"{{ .Values.cluster }}\"",
           "davis": {
             "enabled": false,
