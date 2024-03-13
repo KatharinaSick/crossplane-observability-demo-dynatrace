@@ -17,7 +17,7 @@ spec:
       - key: workload_name
         value: {{ .Values.workloadName }}
       - key: database_name
-        value: {{ .Values.databaseName }}
+        value: {{ .Values.databaseAddress }}
       - key: slack_channel
         value: "{{ .Values.alerting.slackChannel }}"
     varFiles:
